@@ -1,0 +1,312 @@
+% Propiedades medicinales de las plantas y usos específicos
+propiedades(sanguinaria, depurativo).
+propiedades(sanguinaria, diuretico).
+propiedades(sensitiva, sedante).
+propiedades(simonillo, digestivo).
+propiedades(simonillo, laxante).
+propiedades(tamarindo, laxante).
+propiedades(tamarindo, diuretico).
+propiedades(tamarindo, refrescante).
+propiedades(elote, diuretico).
+propiedades(malva, diuretico).
+propiedades(malva, laxante).
+propiedades(malva, pectoral).
+propiedades(malvavisco, laxante).
+propiedades(malvavisco, calmante).
+propiedades(malvavisco, diuretico).
+propiedades(malvavisco, expectorante).
+
+% Nombre científico
+nombre_cientifico(sanguinaria, poligonum_sang).
+nombre_cientifico(sensitiva, mimosa_puolica).
+nombre_cientifico(simonillo, laenecia_filaginoides).
+nombre_cientifico(tamarindo, tamarindus_indica).
+nombre_cientifico(maiz, sea_mais).
+nombre_cientifico(malva, malva_sylvetris).
+nombre_cientifico(malvavisco, althea_off).
+
+% Relación entre plantas y síntomas/enfermedades que tratan
+trata(sanguinaria, calculos_biliares).
+trata(sanguinaria, viscocidad_sangre).
+trata(sanguinaria, curacion_ulceras).
+trata(sensitiva, insomnio).
+trata(sensitiva, dolor_de_parto).
+trata(sensitiva, aire_en_vientre).
+trata(sensitiva, nervioseras).
+trata(sensitiva, dolor_de_muelas).
+trata(simonillo, ictericia).
+trata(simonillo, catarro_vias_biliares).
+trata(simonillo, colico_hepatico).
+trata(simonillo, dispepsia_cronica).
+trata(simonillo, estrenimiento).
+trata(tamarindo, estrenimiento).
+trata(tamarindo, deshidratacion).
+trata(tamarindo, indigestion).
+trata(elote, calculos_biliares).
+trata(elote, calculos_renales).
+trata(elote, hinchazon_piernas).
+trata(elote, gota).
+trata(elote, nefritis).
+trata(elote, ciatica).
+trata(malva, disenteria).
+trata(malva, gastoenteritis_infantil).
+trata(malva, artritis).
+trata(malva, gota).
+trata(malva, absesos_dentales).
+trata(malva, dolor_de_muelas).
+trata(malva, estrenimiento).
+trata(malvavisco, reumatismo).
+trata(malvavisco, tos_catarrial).
+trata(malvavisco, entero_colitis).
+trata(malvavisco, garganta_hirritada).
+trata(malvavisco, denticion_infantil).
+trata(malvavisco, insomnio).
+
+% Formas de empleo recomendadas
+forma_de_empleo(sanguinaria, te).
+forma_de_empleo(sensitiva, te).
+forma_de_empleo(simonillo, te).
+forma_de_empleo(tamarindo, te).
+forma_de_empleo(tamarindo, directo).
+forma_de_empleo(elote, te).
+forma_de_empleo(elote, cataplasma).
+forma_de_empleo(malva, te).
+forma_de_empleo(malva, cataplasma).
+forma_de_empleo(malvavisco, directo).
+forma_de_empleo(malvavisco, cataplasma).
+
+% Origen de las plantas
+origen(sanguinaria, 'America del Norte').
+origen(sensitiva, 'America tropical').
+origen(simonillo, 'America Central y del Sur').
+origen(tamarindo, 'India').
+origen(maiz, 'Mexico').
+origen(malva, 'Europa, Asia y norte de Africa').
+origen(malvavisco, 'Roma').
+
+% Significados de efectos
+significado(calmante, 'Sustancia que reduce la excitación o irritación.').
+significado(depurativo, 'Sustancia que purifica o limpia el organismo.').
+significado(digestivo, 'Sustancia que ayuda en el proceso de digestión.').
+significado(diuretico, 'Sustancia que aumenta la producción de orina.').
+significado(expectorante, 'Sustancia que ayuda a expulsar las flemas y mocos de las vías respiratorias.').
+significado(laxante, 'Sustancia que facilita o aumenta la evacuación intestinal.').
+significado(pectoral, 'Sustancia que alivia los problemas del pecho y las vías respiratorias.').
+significado(refrescante, 'Sustancia que proporciona una sensación de frescura y alivio.').
+significado(sedante, 'Sustancia que calma y disminuye la excitación nerviosa.').
+
+%¿Cuales son plantas o plantas medicinales?
+plantas_plantas_medicinales :-
+    setof(Planta, Propiedad^propiedades(Planta, Propiedad), Plantas),
+    listar_plantas(Plantas).
+
+listar_plantas([]).
+listar_plantas([Cabeza|Cola]) :-
+    write(Cabeza), nl,
+    listar_plantas(Cola).
+
+%¿Qué elementos se encuentran en las plantas?
+plantas_y_propiedades :-
+    propiedades(Planta, Propiedad),
+    write(Planta), write(' tiene el elemento: '), writeln(Propiedad),
+    fail.
+plantas_y_propiedades.
+
+%¿Qué elementos tiene una planta en especifica?
+propiedades_de_una_planta(Planta) :-
+    propiedades(Planta, Propiedad),
+    write(Planta), write(' tiene el elemento: '), writeln(Propiedad),
+    fail.
+propiedades_de_una_planta(_).
+
+%¿Qué plantas producen medicamentos?
+plantas_que_producen_medicamentos :-
+    setof(Planta, Propiedad^propiedades(Planta, Propiedad), Plantas),
+    listar_plantas_medicamentos(Plantas).
+
+listar_plantas_medicamentos([]).
+listar_plantas_medicamentos([Cabeza|Cola]) :-
+    write(Cabeza), write(' produce medicamentos.'), nl,
+    listar_plantas_medicamentos(Cola).
+
+%¿Qué medicamentos producen una planta en especifico?
+medicamentos_de_una_planta(Planta) :-
+    propiedades(Planta, Propiedad),
+    write(Planta), write(' produce el medicamento: '), writeln(Propiedad),
+    fail.
+medicamentos_de_una_planta(_).
+
+%¿Qué medicamentos provienen de plantas?
+medicamentos_de_plantas :-
+    setof(Propiedad, Planta^propiedades(Planta, Propiedad), Medicamentos),
+    listar_medicamentos(Medicamentos).
+
+listar_medicamentos([]).
+listar_medicamentos([Cabeza|Cola]) :-
+    write(Cabeza), nl,
+    listar_medicamentos(Cola).
+
+%¿Cuales son las acciones o efectos de medicamentos provenientes de plantas?
+efectos_de_medicamentos :-
+    setof(Efecto, Planta^trata(Planta, Efecto), Efectos),
+    listar_efectos(Efectos).
+
+listar_efectos([]).
+listar_efectos([Cabeza|Cola]) :-
+    write('efecto para: '), write(Cabeza), nl,
+    listar_efectos(Cola).
+
+%¿Cuales son los efectos o acciones de un medicamento en especifico?
+efectos_de_planta(Planta) :-
+    setof(Efecto, trata(Planta, Efecto), Efectos),
+    listar_efectos_con_frase(Efectos).
+
+listar_efectos_con_frase([]).
+listar_efectos_con_frase([Cabeza|Cola]) :-
+    write('efecto para: '), write(Cabeza), nl,
+    listar_efectos_con_frase(Cola).
+
+%¿Cuales son las acciones o efectos que tienen las plantas? 
+efectos_de_plantas :-
+    setof(Efecto, Planta^trata(Planta, Efecto), Efectos),
+    listar_acciones_efectos(Efectos).
+
+listar_acciones_efectos([]).
+listar_acciones_efectos([Cabeza|Cola]) :-
+    write('efecto para: '), write(Cabeza), nl,
+    listar_efectos(Cola).
+
+%Significado de palabras que son acciones o efectos de plantas sobre organismo
+significado_efecto(Efecto) :-
+    significado(Efecto, Significado),
+    write('El efecto '), write(Efecto), write(' se refiere a: '), write(Significado), nl.
+
+%Listado de plantas y sus acciones o efectos sobre el organismo
+plantas_y_sus_efectos :-
+    forall(trata(Planta, Efecto),
+           (write('La planta '), write(Planta), write(' tiene efecto para: '), write(Efecto), nl)).
+
+%Acciones o efectos de una planta en especifico
+acciones_de_planta(Planta) :-
+    forall(trata(Planta, Efecto),
+           (write('La planta '), write(Planta), write(' tiene efecto para: '), write(Efecto), nl)).
+
+%¿Qué plantas son analgésicas?
+plantas_analgesicas(Planta) :-
+    trata(Planta, dolor_de_muelas).
+plantas_analgesicas(Planta) :-
+    trata(Planta, dolor_de_parto).
+plantas_analgesicas(Planta) :-
+    trata(Planta, ciatica).
+plantas_analgesicas(Planta) :-
+    trata(Planta, dolor_de_muelas).
+
+%Listar plantas medicinales y su nombre científico
+plantas_y_nombres_cientificos(Planta, NombreCientifico) :-
+    nombre_cientifico(Planta, NombreCientifico).
+
+%¿Cuales son las enfermedades que curan las plantas?
+enfermedades_que_curan_las_plantas :-
+    setof(Enfermedad, Planta^trata(Planta, Enfermedad), Enfermedades),
+    listar_enfermedades(Enfermedades).
+
+listar_enfermedades([]).
+listar_enfermedades([Cabeza|Cola]) :-
+    write('Las plantas curan las enfermedades de: '), write(Cabeza), nl,
+    listar_enfermedades(Cola).
+
+%¿Cuales son  las enfermedades que que cura una planta en específico?
+enfermedades_que_cura(Planta) :-
+    setof(Enfermedad, trata(Planta, Enfermedad), Enfermedades),
+    write('La planta '), write(Planta), write(' cura las enfermedades de: '), nl,
+    listar_enfermedad_una_planta(Enfermedades).
+
+listar_enfermedad_una_planta([]).
+listar_enfermedad_una_planta([Enfermedad|Resto]) :-
+    write(Enfermedad), nl,
+    listar_enfermedad_una_planta(Resto).
+
+%¿Cuales son las plantas que curan una enfermedad como por ejemplo el herpes?
+plantas_que_curan_enfermedad(Enfermedad) :-
+    setof(Planta, trata(Planta, Enfermedad), Plantas),
+    write('Las plantas que curan '), write(Enfermedad), write(' son: '), nl,
+    listar_plantas_que_curan(Plantas).
+
+listar_plantas_que_curan([]).
+listar_plantas_que_curan([Planta|Resto]) :-
+    write(Planta), nl,
+    listar_plantas_que_curan(Resto).
+
+%¿Cuales son las formas de preparación para tratamiento de enfermedades con uso de plantas?
+formas_de_preparacion_para_tratamiento(Enfermedad) :-
+    setof((Planta, Forma), (trata(Planta, Enfermedad), forma_de_empleo(Planta, Forma)), Preparaciones),
+    write('Las formas de preparación para tratar '), write(Enfermedad), write(' son:'), nl,
+    listar_preparaciones(Preparaciones).
+
+listar_preparaciones([]).
+listar_preparaciones([(Planta, Forma)|Resto]) :-
+    write('Planta: '), write(Planta), write(', Forma de empleo: '), write(Forma), nl,
+    listar_preparaciones(Resto).
+
+%¿Cuales son los modos de preparación de una planta en especifico?
+modos_de_preparacion_planta(Planta) :-
+    setof(Forma, forma_de_empleo(Planta, Forma), Formas),
+    write('Los modos de preparación de la planta '), write(Planta), write(' son:'), nl,
+    listar_formas(Formas).
+
+listar_formas([]).
+listar_formas([Forma|Resto]) :-
+    write(Forma), nl,
+    listar_formas(Resto).
+
+%¿Cual es el tratamiento y su preparación para alguna enfermedad?
+tratamiento_y_preparacion_para_enfermedad(Enfermedad) :-
+    setof((Planta, Forma), (trata(Planta, Enfermedad), forma_de_empleo(Planta, Forma)), Preparaciones),
+    write('El tratamiento y su preparación para tratar '), write(Enfermedad), write(' son:'), nl,
+    listar_tratamientos(Preparaciones).
+
+listar_tratamientos([]).
+listar_tratamientos([(Planta, Forma)|Resto]) :-
+    write('Planta: '), write(Planta), write(', Forma de empleo: '), write(Forma), nl,
+    listar_tratamientos(Resto).
+
+%¿Cuales son los orígenes de las plantas medicinales?
+origenes_de_todas_las_plantas :-
+    setof((Planta, Origen), origen(Planta, Origen), Origenes),
+    listar_origenes(Origenes).
+
+listar_origenes([]).
+listar_origenes([(Planta, Origen)|Resto]) :-
+    write('El origen de '), write(Planta), write(' es: '), write(Origen), nl,
+    listar_origenes(Resto).
+
+%¿Cual es el origen de una planta?
+origen_de_planta(Planta) :-
+    origen(Planta, Origen),
+    write('El origen de '), write(Planta), write(' es: '), write(Origen), nl.
+
+%¿Cual es el tratamiento para una enfermedad (ya sea con plantas o medicamentos)?
+tratamiento_para_enfermedad(Enfermedad) :-
+    trata(Planta, Enfermedad),
+    forma_de_empleo(Planta, Forma),
+    write('La planta '), write(Planta), write(' se utiliza en forma de '), write(Forma), write(' para tratar '), write(Enfermedad), nl.
+
+%Botiquín de plantas.
+botiquin_de_plantas :-
+    setof(Planta, Forma^forma_de_empleo(Planta, Forma), Plantas),
+    listar_botiquin(Plantas).
+
+listar_botiquin([]).
+listar_botiquin([Cabeza|Cola]) :-
+    write('La planta '), write(Cabeza), write(' se puede emplear de las siguientes formas:'), nl,
+    listar_formas_de_empleo(Cabeza),
+    listar_botiquin(Cola).
+
+listar_formas_de_empleo(Planta) :-
+    findall(Forma, forma_de_empleo(Planta, Forma), Formas),
+    listar_formas_b(Formas).
+
+listar_formas_b([]).
+listar_formas_b([Cabeza|Cola]) :-
+    write('- '), write(Cabeza), nl,
+    listar_formas_b(Cola).
